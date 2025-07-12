@@ -8,10 +8,10 @@ const InnerLabContext = createContext<InnerLabContextType | undefined>(undefined
 const initialState: InnerLabState = {
   selectedIdentity: null,
   attributes: {
-    creativity: 50,
-    logic: 50,
-    intuition: 50,
-    focus: 50,
+    creativity: 0,
+    logic: 0,
+    intuition: 0,
+    focus: 0,
   },
   traits: {
     analytical: false,

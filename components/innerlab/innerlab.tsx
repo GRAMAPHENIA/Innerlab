@@ -14,7 +14,7 @@ export function InnerLab({ children, className }: InnerLabProps) {
     <InnerLabProvider>
       <div
         className={clsx(
-          "min-h-screen w-full",
+          "w-full",
           "bg-gradient-to-br from-zinc-50 to-zinc-100",
           "dark:from-zinc-900/10 dark:to-zinc-800/10",
           "transition-colors duration-300",
