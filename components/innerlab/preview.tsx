@@ -34,7 +34,7 @@ export function Preview() {
             "bg-gray-100 dark:bg-gray-700",
             "text-gray-700 dark:text-gray-300",
             "hover:bg-gray-200 dark:hover:bg-gray-600",
-            "transition-colors duration-200",
+            "transition-colors duration-200 rounded-[5px]",
           )}
         >
           <RotateCcw className="w-4 h-4" />
@@ -78,7 +78,7 @@ export function Preview() {
             {Object.entries(attributes).map(([name, value]) => (
               <div
                 key={name}
-                className={clsx("flex justify-between items-center p-3 rounded-lg", "bg-gray-50 dark:bg-gray-700/50")}
+                className={clsx("flex justify-between items-center p-3 rounded-[5px]", "bg-gray-50 dark:bg-gray-700/50")}
               >
                 <span className={clsx("text-sm capitalize", "text-gray-600 dark:text-gray-400")}>{name}</span>
                 <span className={clsx("font-mono text-sm", "text-gray-800 dark:text-gray-200")}>{value}</span>
