@@ -8,23 +8,37 @@ import { Settings, Fingerprint, LayoutDashboard } from "lucide-react"
 const ConfigModal = ({ isOpen, onClose, children }: { isOpen: boolean; onClose: () => void; children: React.ReactNode }) => {
   if (!isOpen) return null;
 
+  const handleAccept = () => {
+    // Aquí podrías agregar lógica adicional antes de cerrar el modal
+    onClose();
+  };
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-xl flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800/50 rounded-xl backdrop-blur-xl p-6 max-w-2xl w-full  overflow-y-auto">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold text-gray-800 dark:text-white">Configuración</h2>
+      <div className="bg-white dark:bg-gray-800/50 rounded-xl backdrop-blur-xl p-4 max-w-2xl w-full flex flex-col">
+        <div className="flex justify-between items-center mb-3">
+          <h2 className="text-lg font-bold text-gray-800 dark:text-white">Configuración</h2>
           <button 
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white"
+            className="text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white p-1 -mr-2"
+            aria-label="Cerrar"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
-        <div className="space-y-6">
+        <div className="mb-3">
           {children}
+        </div>
+        <div className="pt-3 border-t border-gray-200 dark:border-gray-700 flex justify-end">
+          <button
+            onClick={handleAccept}
+            className="px-4 py-2 text-sm bg-blue-500 hover:bg-blue-600 text-white rounded-full font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
+          >
+            Aceptar
+          </button>
         </div>
       </div>
     </div>
@@ -96,11 +110,11 @@ export default function HomePage() {
               <InnerLab>
                 {/* Configuración en modal */}
                 <ConfigModal isOpen={isConfigOpen} onClose={() => setIsConfigOpen(false)}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {/* Columna de sliders */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Atributos</h3>
-                      <div className="space-y-6">
+                    <div>
+                      <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 mb-2">Atributos</h3>
+                      <div className="space-y-3">
                         <InnerLab.Slider name="creativity" label="Creatividad" />
                         <InnerLab.Slider name="logic" label="Lógica" />
                         <InnerLab.Slider name="intuition" label="Intuición" />
@@ -109,9 +123,9 @@ export default function HomePage() {
                     </div>
 
                     {/* Columna de toggles */}
-                    <div className="space-y-4">
-                      <h3 className="text-lg font-medium text-gray-700 dark:text-gray-300">Rasgos</h3>
-                      <div className="space-y-4">
+                    <div>
+                      <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 mb-2">Rasgos</h3>
+                      <div className="space-y-2">
                         <InnerLab.Toggle name="analytical" label="Analítico" />
                         <InnerLab.Toggle name="innovative" label="Innovador" />
                         <InnerLab.Toggle name="collaborative" label="Colaborativo" />
