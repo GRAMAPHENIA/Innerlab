@@ -1,18 +1,10 @@
-"use client";
+"use client"
 
-import { useInnerLab } from "@/context/innerlab-context";
-import { clsx } from "clsx";
-import {
-  Fingerprint,
-  RotateCcw,
-  Sparkles,
-  Brain,
-  Lightbulb,
-  Target,
-} from "lucide-react";
-import { PersonalityShape } from "./personality-shape";
+import { useInnerLab } from "@/context/innerlab-context"
+import { clsx } from "clsx"
+import { Brain, Lightbulb, RotateCcw, Sparkles, Target } from "lucide-react"
+import { RadarChart } from "./radar-chart"
 
-// Función para obtener el color basado en el porcentaje
 const getColorClass = (value: number) => {
   if (value <= 20) return "text-gray-400 dark:text-gray-500";
   if (value <= 40) return "text-blue-400 dark:text-blue-500";
@@ -160,6 +152,11 @@ export function Preview() {
               );
             })}
           </div>
+        </div>
+
+        {/* Gráfico de Radar */}
+        <div className="mt-6">
+          <RadarChart />
         </div>
 
         {/* Traits activos */}
