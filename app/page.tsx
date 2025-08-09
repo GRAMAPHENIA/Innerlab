@@ -90,7 +90,7 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
+    <div className="bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
       <InnerLab>
         <div className="flex-col">
           {/* Barra superior */}
