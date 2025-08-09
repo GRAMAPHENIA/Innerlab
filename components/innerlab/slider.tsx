@@ -5,17 +5,18 @@ import { clsx } from "clsx"
 import { Sparkles, Brain, Lightbulb, Target, AlertCircle } from "lucide-react"
 import { useState } from "react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { AttributeName } from "@/types"
 
 // Mapeo de atributos a iconos
 const attributeIcons = {
   creativity: Sparkles,
   logic: Brain,
   intuition: Lightbulb,
-  focus: Target
+  focus: Target,
 } as const
 
 interface SliderProps {
-  name: string
+  name: AttributeName
   label?: string
   min?: number
   max?: number
@@ -27,7 +28,7 @@ export function Slider({ name, label, min = 0, max = 100 }: SliderProps) {
   const [error, setError] = useState<string | null>(null)
 
   // Obtener el ícono correspondiente al atributo
-  const Icon = attributeIcons[name as keyof typeof attributeIcons] || Sparkles
+  const Icon = attributeIcons[name] || Sparkles
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = Number.parseInt(e.target.value)

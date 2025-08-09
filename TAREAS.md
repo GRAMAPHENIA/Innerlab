@@ -9,10 +9,10 @@
 - [X] Mostrar mensajes de error al usuario
 
 ### Tarea 2: Persistencia Local
-- [ ] Crear hook `useLocalStorage` personalizado
-- [ ] Integrar persistencia en el contexto de InnerLab
-- [ ] Guardar/cargar configuraciones automáticamente
-- [ ] Agregar botón "Resetear a valores por defecto"
+- [X] Crear hook `useLocalStorage` personalizado
+- [X] Integrar persistencia en el contexto de InnerLab
+- [X] Guardar/cargar configuraciones automáticamente
+- [X] Agregar botón "Resetear a valores por defecto"
 
 ### Tarea 3: Mejores Tipos TypeScript
 - [ ] Refinar interfaces existentes
