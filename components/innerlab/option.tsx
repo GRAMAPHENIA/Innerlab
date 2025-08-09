@@ -2,38 +2,23 @@
 
 import { useInnerLab } from "@/context/innerlab-context"
 import { clsx } from "clsx"
-import { Compass, Building2, Palette, Lightbulb, Users, Target, Zap, Heart } from "lucide-react"
+import { Sparkles } from "lucide-react" // Icono por defecto
+import * as LucideIcons from "lucide-react"
+import type { Identity } from "@/types"
 
-const identityIcons = {
-  explorer: Compass,
-  architect: Building2,
-  artist: Palette,
-  innovator: Lightbulb,
-  collaborator: Users,
-  strategist: Target,
-  catalyst: Zap,
-  empath: Heart,
-}
-
-const identityDescriptions = {
-  explorer: "Descubre nuevos territorios",
-  architect: "Construye estructuras sólidas",
-  artist: "Expresa creatividad pura",
-  innovator: "Genera ideas revolucionarias",
-  collaborator: "Conecta y une equipos",
-  strategist: "Planifica el futuro",
-  catalyst: "Acelera el cambio",
-  empath: "Comprende profundamente",
-}
+type IconName = keyof typeof LucideIcons
 
 interface OptionProps {
-  name: keyof typeof identityIcons
+  identity: Identity
 }
 
-export function Option({ name }: OptionProps) {
+export function Option({ identity }: OptionProps) {
   const { selectedIdentity, selectIdentity } = useInnerLab()
-  const Icon = identityIcons[name]
+  const { name, description, icon } = identity
   const isSelected = selectedIdentity === name
+
+  // Búsqueda dinámica del icono. Si no se encuentra, usa 'Sparkles'.
+  const IconComponent = (LucideIcons[icon as IconName] as React.ElementType) || Sparkles
 
   return (
     <button
@@ -65,7 +50,7 @@ export function Option({ name }: OptionProps) {
                 ],
           )}
         >
-          <Icon className="w-6 h-6" />
+          <IconComponent className="w-6 h-6" />
         </div>
 
         <div>
@@ -78,7 +63,7 @@ export function Option({ name }: OptionProps) {
             {name}
           </h3>
           <p className={clsx("text-sm leading-tight", "text-gray-600 dark:text-gray-400")}>
-            {identityDescriptions[name]}
+            {description}
           </p>
         </div>
       </div>

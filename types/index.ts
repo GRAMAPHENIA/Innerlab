@@ -28,12 +28,14 @@ export interface Trait {
 }
 
 export interface InnerLabState {
+  identities: Identity[]
   selectedIdentity: string | null
   attributes: Record<AttributeName, number>
   traits: Record<TraitName, boolean>
 }
 
 export interface InnerLabContextType extends InnerLabState {
+  addIdentity: (identity: Identity) => void
   selectIdentity: (identity: string) => void
   updateAttribute: (name: AttributeName, value: number) => void
   toggleTrait: (name: TraitName) => void

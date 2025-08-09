@@ -1,13 +1,20 @@
 "use client"
 
 import { createContext, useContext, type ReactNode } from "react"
-import type { InnerLabContextType, InnerLabState } from "@/types"
+import type {
+  InnerLabContextType,
+  InnerLabState,
+  AttributeName,
+  TraitName,
+  Identity,
+} from "@/types"
 import { validateRange } from "@/lib/utils"
 import { useLocalStorage } from "@/hooks/use-local-storage"
 
 const InnerLabContext = createContext<InnerLabContextType | undefined>(undefined)
 
 const initialState: InnerLabState = {
+  identities: [],
   selectedIdentity: null,
   attributes: {
     creativity: 0,
@@ -29,11 +36,18 @@ export function InnerLabProvider({ children }: { children: ReactNode }) {
     initialState,
   )
 
+  const addIdentity = (identity: Identity) => {
+    setState((prev) => ({
+      ...prev,
+      identities: [...prev.identities, identity],
+    }))
+  }
+
   const selectIdentity = (identity: string) => {
     setState((prev) => ({ ...prev, selectedIdentity: identity }))
   }
 
-  const updateAttribute = (name: string, value: number) => {
+  const updateAttribute = (name: AttributeName, value: number) => {
     const { value: validatedValue } = validateRange(value, 0, 100)
     setState((prev) => ({
       ...prev,
@@ -41,7 +55,7 @@ export function InnerLabProvider({ children }: { children: ReactNode }) {
     }))
   }
 
-  const toggleTrait = (name: string) => {
+  const toggleTrait = (name: TraitName) => {
     setState((prev) => ({
       ...prev,
       traits: { ...prev.traits, [name]: !prev.traits[name] },
@@ -56,6 +70,7 @@ export function InnerLabProvider({ children }: { children: ReactNode }) {
     <InnerLabContext.Provider
       value={{
         ...state,
+        addIdentity,
         selectIdentity,
         updateAttribute,
         toggleTrait,
