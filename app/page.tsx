@@ -10,7 +10,6 @@ import {
   ListChecks,
   PlusCircle,
 } from "lucide-react";
-import { useInnerLab } from "@/context/innerlab-context";
 import Link from "next/link"
 import type { Identity } from "@/types"
 
@@ -78,8 +77,7 @@ export default function HomePage() {
   const [isIdentityOpen, setIsIdentityOpen] = useState(false);
   const [isAttributesOpen, setIsAttributesOpen] = useState(false);
   const [isTraitsOpen, setIsTraitsOpen] = useState(false);
-  const { identities } = useInnerLab()
-
+  
   const predefinedIdentities: Identity[] = [
     { name: "explorer", description: "Descubre nuevos territorios", icon: "Compass" },
     { name: "architect", description: "Construye estructuras sólidas", icon: "Building2" },
@@ -90,8 +88,6 @@ export default function HomePage() {
     { name: "catalyst", description: "Acelera el cambio", icon: "Zap" },
     { name: "empath", description: "Comprende profundamente", icon: "Heart" },
   ]
-
-  const allIdentities = [...predefinedIdentities, ...identities]
 
   return (
     <div className="h-screen bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
@@ -183,101 +179,85 @@ export default function HomePage() {
 
           <div className="flex-1 overflow-y-auto">
             <div className="pt-16">
-              <InnerLab>
-                {/* Configuración en modal */}
-                {/* Modal de Atributos */}
-                <ConfigModal
-                  isOpen={isAttributesOpen}
-                  onClose={() => setIsAttributesOpen(false)}
-                >
-                  <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
-                      Atributos
-                    </h2>
-                    <div className="space-y-4">
-                      <InnerLab.Slider name="creativity" label="Creatividad" />
-                      <InnerLab.Slider name="logic" label="Lógica" />
-                      <InnerLab.Slider name="intuition" label="Intuición" />
-                      <InnerLab.Slider name="focus" label="Enfoque" />
+              {/* Configuración en modal */}
+              {/* Modal de Atributos */}
+              <ConfigModal
+                isOpen={isAttributesOpen}
+                onClose={() => setIsAttributesOpen(false)}
+              >
+                <div className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
+                    Atributos
+                  </h2>
+                  <div className="space-y-4">
+                    <InnerLab.Slider name="creativity" label="Creatividad" />
+                    <InnerLab.Slider name="logic" label="Lógica" />
+                    <InnerLab.Slider name="intuition" label="Intuición" />
+                    <InnerLab.Slider name="focus" label="Enfoque" />
+                  </div>
+                </div>
+              </ConfigModal>
+
+              {/* Modal de Rasgos */}
+              <ConfigModal
+                isOpen={isTraitsOpen}
+                onClose={() => setIsTraitsOpen(false)}
+              >
+                <div className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
+                    Rasgos
+                  </h2>
+                  <div className="grid grid-cols-1 gap-2">
+                    <InnerLab.Toggle name="analytical" label="Analítico" />
+                    <InnerLab.Toggle name="innovative" label="Innovador" />
+                    <InnerLab.Toggle
+                      name="collaborative"
+                      label="Colaborativo"
+                    />
+                    <InnerLab.Toggle
+                      name="independent"
+                      label="Independiente"
+                    />
+                  </div>
+                </div>
+              </ConfigModal>
+
+              {/* Modal de Ajustes */}
+              <ConfigModal
+                isOpen={isConfigOpen}
+                onClose={() => setIsConfigOpen(false)}
+              >
+                <div className="space-y-6">
+                  <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
+                    Ajustes
+                  </h2>
+                  <div>
+                    <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 mb-4">
+                      Tema
+                    </h3>
+                    <div className="flex items-center justify-between p-4 bg-gray-100 dark:bg-gray-700/50 rounded-lg">
+                      <span className="text-gray-700 dark:text-gray-300">
+                        Modo oscuro
+                      </span>
+                      <ThemeToggle />
                     </div>
                   </div>
-                </ConfigModal>
+                </div>
+              </ConfigModal>
 
-                {/* Modal de Rasgos */}
-                <ConfigModal
-                  isOpen={isTraitsOpen}
-                  onClose={() => setIsTraitsOpen(false)}
-                >
-                  <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
-                      Rasgos
-                    </h2>
-                    <div className="grid grid-cols-1 gap-2">
-                      <InnerLab.Toggle name="analytical" label="Analítico" />
-                      <InnerLab.Toggle name="innovative" label="Innovador" />
-                      <InnerLab.Toggle
-                        name="collaborative"
-                        label="Colaborativo"
-                      />
-                      <InnerLab.Toggle
-                        name="independent"
-                        label="Independiente"
-                      />
-                    </div>
-                  </div>
-                </ConfigModal>
-
-                {/* Modal de Ajustes */}
-                <ConfigModal
-                  isOpen={isConfigOpen}
-                  onClose={() => setIsConfigOpen(false)}
-                >
-                  <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
-                      Ajustes
-                    </h2>
-                    <div>
-                      <h3 className="text-base font-medium text-gray-700 dark:text-gray-300 mb-4">
-                        Tema
-                      </h3>
-                      <div className="flex items-center justify-between p-4 bg-gray-100 dark:bg-gray-700/50 rounded-lg">
-                        <span className="text-gray-700 dark:text-gray-300">
-                          Modo oscuro
-                        </span>
-                        <ThemeToggle />
-                      </div>
-                    </div>
-                  </div>
-                </ConfigModal>
-
-                {/* Modal de Identidad Creativa */}
-                <ConfigModal
-                  isOpen={isIdentityOpen}
+              {/* Modal de Identidad Creativa */}
+              <ConfigModal
+                isOpen={isIdentityOpen}
+                onClose={() => setIsIdentityOpen(false)}
+              >
+                <IdentityList 
+                  predefinedIdentities={predefinedIdentities}
                   onClose={() => setIsIdentityOpen(false)}
-                >
-                  <div className="space-y-6">
-                    <h2 className="text-xl font-bold text-gray-800 dark:text-white mb-6">
-                      Identidad Creativa
-                    </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                      {allIdentities.map((identity) => (
-                        <InnerLab.Option key={identity.name} identity={identity} />
-                      ))}
-                    </div>
-                    <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                      <Link href="/custom-identity">
-                        <button className="w-full flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-full hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
-                          <PlusCircle className="w-5 h-5" />
-                          Crear Nueva Identidad
-                        </button>
-                      </Link>
-                    </div>
-                  </div>
-                </ConfigModal>
+                />
+              </ConfigModal>
 
-                {/* Vista previa */}
-                <InnerLab.Preview />
-              </InnerLab>
+              {/* Vista previa - Use InnerLab.Preview instead of directly importing Preview */}
+              <InnerLab.Preview />
             </div>
           </div>
         </div>
@@ -285,3 +265,6 @@ export default function HomePage() {
     </div>
   );
 }
+
+// Importar el nuevo componente
+import { IdentityList } from "@/components/innerlab/identity-list";

@@ -3,35 +3,39 @@
 import { useState, useEffect } from "react"
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
+  // Estado para controlar si estamos en el cliente
+  const [isClient, setIsClient] = useState(false)
+  
   // Estado para almacenar nuestro valor
-  // Pasar la función de estado inicial a useState para que la lógica solo se ejecute una vez
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === "undefined") {
-      return initialValue
-    }
+  // Siempre inicializar con initialValue para evitar hidratación incorrecta
+  const [storedValue, setStoredValue] = useState<T>(initialValue)
+
+  // Efecto que se ejecuta solo en el cliente después de la hidratación
+  useEffect(() => {
+    setIsClient(true)
+    
     try {
       // Obtener de local storage por clave
       const item = window.localStorage.getItem(key)
       // Parsear el JSON almacenado o, si no existe, usar initialValue
-      return item ? JSON.parse(item) : initialValue
+      const value = item ? JSON.parse(item) : initialValue
+      setStoredValue(value)
     } catch (error) {
-      // Si hay un error, también usar initialValue
+      // Si hay un error, mantener initialValue
       console.error(error)
-      return initialValue
     }
-  })
+  }, [key, initialValue])
 
   // useEffect para actualizar localStorage cuando el estado cambia
   useEffect(() => {
+    if (!isClient) return
+    
     try {
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(key, JSON.stringify(storedValue))
-      }
+      window.localStorage.setItem(key, JSON.stringify(storedValue))
     } catch (error) {
-      // Una implementación más avanzada podría manejar el error
       console.error(error)
     }
-  }, [key, storedValue])
+  }, [key, storedValue, isClient])
 
   return [storedValue, setStoredValue] as const
 }
