@@ -4,6 +4,7 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/context/theme-context"
 import { InnerLabProvider } from "@/context/innerlab-context"
+import { GamificationProvider } from "@/context/gamification-context"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,7 +23,11 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider>
-          <InnerLabProvider>{children}</InnerLabProvider>
+          <InnerLabProvider>
+            <GamificationProvider>
+              {children}
+            </GamificationProvider>
+          </InnerLabProvider>
         </ThemeProvider>
       </body>
     </html>

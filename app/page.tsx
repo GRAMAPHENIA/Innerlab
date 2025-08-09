@@ -9,9 +9,11 @@ import {
   SlidersHorizontal,
   ListChecks,
   PlusCircle,
+  Trophy,
 } from "lucide-react";
 import Link from "next/link"
 import type { Identity } from "@/types"
+import { IdentityList } from "@/components/innerlab/identity-list";
 
 // Componente de Modal
 const ConfigModal = ({
@@ -161,6 +163,24 @@ export default function HomePage() {
 
               <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
 
+              {/* Botón de Gamificación */}
+              <div className="relative group">
+                <Link href="/gamification">
+                  <button
+                    className="flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200/50 dark:hover:bg-gray-700/50 transition-colors"
+                    aria-label="Gamificación"
+                  >
+                    <Trophy className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                  </button>
+                </Link>
+                <span className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-2 py-1 text-xs font-medium text-white bg-gray-900 rounded-md opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                  Gamificación
+                  <span className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45 -mt-1"></span>
+                </span>
+              </div>
+
+              <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+
               <div className="relative group">
                 <button
                   onClick={() => setIsConfigOpen(true)}
@@ -265,6 +285,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-// Importar el nuevo componente
-import { IdentityList } from "@/components/innerlab/identity-list";
