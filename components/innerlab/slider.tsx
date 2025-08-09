@@ -2,7 +2,9 @@
 
 import { useInnerLab } from "@/context/innerlab-context"
 import { clsx } from "clsx"
-import { Sparkles, Brain, Lightbulb, Target } from "lucide-react"
+import { Sparkles, Brain, Lightbulb, Target, AlertCircle } from "lucide-react"
+import { useState } from "react"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 // Mapeo de atributos a iconos
 const attributeIcons = {
@@ -22,10 +24,21 @@ interface SliderProps {
 export function Slider({ name, label, min = 0, max = 100 }: SliderProps) {
   const { attributes, updateAttribute } = useInnerLab()
   const value = attributes[name] || 0
+  const [error, setError] = useState<string | null>(null)
 
   // Obtener el ícono correspondiente al atributo
-  const Icon = attributeIcons[name as keyof typeof attributeIcons] || Sparkles;
-  
+  const Icon = attributeIcons[name as keyof typeof attributeIcons] || Sparkles
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = Number.parseInt(e.target.value)
+    if (rawValue < min || rawValue > max) {
+      setError(`El valor debe estar entre ${min} y ${max}.`)
+    } else {
+      setError(null)
+    }
+    updateAttribute(name, rawValue)
+  }
+
   return (
     <div className="p-4 rounded-xl bg-white dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700">
       <div className="flex items-center justify-between mb-2">
@@ -33,7 +46,14 @@ export function Slider({ name, label, min = 0, max = 100 }: SliderProps) {
           <Icon className="w-4 h-4 text-blue-500" />
           <span className={clsx("text-sm font-medium capitalize", "text-gray-800 dark:text-gray-200")}>{label || name}</span>
         </div>
-        <span className={clsx("text-xs font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded", "text-gray-600 dark:text-gray-300")}>{value}</span>
+        <span
+          className={clsx(
+            "text-xs font-mono px-1.5 py-0.5 bg-gray-100 dark:bg-gray-700 rounded",
+            "text-gray-600 dark:text-gray-300",
+          )}
+        >
+          {value}
+        </span>
       </div>
 
       <div className="relative">
@@ -42,7 +62,7 @@ export function Slider({ name, label, min = 0, max = 100 }: SliderProps) {
           min={min}
           max={max}
           value={value}
-          onChange={(e) => updateAttribute(name, Number.parseInt(e.target.value))}
+          onChange={handleChange}
           className={clsx(
             "w-full h-1 appearance-none bg-transparent",
             "[&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:h-1",
@@ -74,6 +94,13 @@ export function Slider({ name, label, min = 0, max = 100 }: SliderProps) {
           }}
         />
       </div>
+      {error && (
+        <Alert variant="destructive" className="mt-2">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>Error</AlertTitle>
+          <AlertDescription>{error}</AlertDescription>
+        </Alert>
+      )}
     </div>
   )
 }

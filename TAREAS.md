@@ -3,10 +3,10 @@
 ## 🔥 **Prioridad Alta (Semana 1-2)**
 
 ### Tarea 1: Validación de Datos
-- [ ] Crear utilidades de validación para atributos (0-100)
-- [ ] Implementar validación en el contexto de InnerLab
-- [ ] Agregar manejo de errores en los sliders
-- [ ] Mostrar mensajes de error al usuario
+- [X] Crear utilidades de validación para atributos (0-100)
+- [X] Implementar validación en el contexto de InnerLab
+- [X] Agregar manejo de errores en los sliders
+- [X] Mostrar mensajes de error al usuario
 
 ### Tarea 2: Persistencia Local
 - [ ] Crear hook `useLocalStorage` personalizado

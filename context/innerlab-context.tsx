@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, type ReactNode } from "react"
 import type { InnerLabContextType, InnerLabState } from "@/types"
+import { validateRange } from "@/lib/utils"
 
 const InnerLabContext = createContext<InnerLabContextType | undefined>(undefined)
 
@@ -29,9 +30,10 @@ export function InnerLabProvider({ children }: { children: ReactNode }) {
   }
 
   const updateAttribute = (name: string, value: number) => {
+    const { value: validatedValue } = validateRange(value, 0, 100)
     setState((prev) => ({
       ...prev,
-      attributes: { ...prev.attributes, [name]: value },
+      attributes: { ...prev.attributes, [name]: validatedValue },
     }))
   }
 
