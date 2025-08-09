@@ -95,6 +95,7 @@
 ### Completadas ✅
 <!-- Aquí puedes mover las tareas completadas -->
 
+
 ### En Progreso 🚧
 <!-- Tareas que estás trabajando actualmente -->
 

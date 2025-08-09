@@ -1,8 +1,9 @@
 "use client"
 
-import { createContext, useContext, useState, type ReactNode } from "react"
+import { createContext, useContext, type ReactNode } from "react"
 import type { InnerLabContextType, InnerLabState } from "@/types"
 import { validateRange } from "@/lib/utils"
+import { useLocalStorage } from "@/hooks/use-local-storage"
 
 const InnerLabContext = createContext<InnerLabContextType | undefined>(undefined)
 
@@ -23,7 +24,10 @@ const initialState: InnerLabState = {
 }
 
 export function InnerLabProvider({ children }: { children: ReactNode }) {
-  const [state, setState] = useState<InnerLabState>(initialState)
+  const [state, setState] = useLocalStorage<InnerLabState>(
+    "innerlab-state",
+    initialState,
+  )
 
   const selectIdentity = (identity: string) => {
     setState((prev) => ({ ...prev, selectedIdentity: identity }))
